@@ -22,7 +22,7 @@ for bam_file in "$input_dir"/*_rmdup.bam; do
 
 	echo "base name:" $base_name
  	# Define output file paths
- 	output_file="${output_dir}/chrX.${base_name}.txt"
+ 	output_file="${output_dir}/chr1.${base_name}.txt"
 	echo "output file:" $output_file
 	  # Check if output file already exists
   	if [[ -e "$output_file" ]]; then
@@ -34,14 +34,14 @@ for bam_file in "$input_dir"/*_rmdup.bam; do
  #samtools view -h -b -r chrX $bam_file -o $output_file
 
 	#Submit a Slurm job using --wrap
- 	sbatch --job-name="filter_x_${base_name}" \
+ 	sbatch --job-name="filter_1_${base_name}" \
         	--error "$output_dir/slurmout/${base_name}.validate.e" \
         	--output "$output_dir/slurmout/${base_name}.validate.o" \
         	--time=4-0 \
         	--mem=16G \
          	--cpus-per-task=4 \
          	--partition=compute-64-512 \
-         	--wrap="samtools coverage -r chrX $bam_file -o $output_file"
+         	--wrap="samtools coverage -r chr1 $bam_file -o $output_file"
 break 
 done
 
